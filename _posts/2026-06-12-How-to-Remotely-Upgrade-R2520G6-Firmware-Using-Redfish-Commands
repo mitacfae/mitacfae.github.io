@@ -1,0 +1,323 @@
+---
+layout: post
+title: "How to Remotely Upgrade R2520G6 Firmware Using Redfish Commands"
+date: 2026-06-12
+categories: [Server, Redfish, Firmware]
+tags: [R2520G6, BIOS, BMC, CPLD, ROT, Redfish]
+---
+
+<article class="post">
+
+<header class="post-header">
+    <h1 class="post-title">How to Remotely Upgrade R2520G6 Firmware Using Redfish Commands</h1>
+
+    <p class="post-meta">
+        Posted on June 11, 2026
+    </p>
+</header>
+
+<hr>
+
+<h2>Description</h2>
+
+<p>
+When performing server maintenance, manual or onsite firmware updates often introduce numerous operational challenges and inefficiencies.
+To improve maintenance efficiency and enable robust remote management capability, this guide demonstrates how to remotely upgrade firmware
+through Redfish API commands on the MiTAC R2520G6 platform.
+</p>
+
+<hr>
+
+<h2>Solution Overview</h2>
+
+<p>
+This article provides step-by-step instructions to remotely upgrade the following firmware components:
+</p>
+
+<ul>
+    <li>BIOS</li>
+    <li>BMC</li>
+    <li>CPLD</li>
+    <li>ROT</li>
+</ul>
+
+<p>
+All firmware updates are executed through Redfish API interfaces.
+</p>
+
+<hr>
+
+<h2>Prerequisites</h2>
+
+<ol>
+    <li>
+        Ensure the R2520G6 server is powered off before starting firmware upgrades.
+    </li>
+
+    <li>
+        Prepare the required Out-of-Band (OOB) firmware image files on your Linux host system.
+    </li>
+</ol>
+
+<hr>
+
+<h2>1. BIOS Firmware Upgrade</h2>
+
+<h3>Step 1 — Check Current BIOS Version</h3>
+
+<pre><code>curl -u username:password -k -s \
+https://{BMC_IP}/redfish/v1/UpdateService/FirmwareInventory/bios_active
+</code></pre>
+
+<h3>Step 2 — Configure Upgrade Target</h3>
+
+<pre><code>curl -k -u username:password \
+-X PATCH https://{BMC_IP}/redfish/v1/UpdateService \
+-H "Content-Type: application/json" \
+-d '{
+    "HttpPushUriOptions": {
+        "HttpPushUriApplyTime": {
+            "ApplyTime": "Immediate"
+        }
+    },
+    "HttpPushUriTargets": [
+        "bios_active"
+    ],
+    "HttpPushUriTargetsBusy": true,
+    "Oem": {
+        "ApplyOptions": {
+            "ClearConfig": true
+        }
+    }
+}' \
+-w "\nHTTP_CODE=%{response_code}\n"
+</code></pre>
+
+<p><strong>Expected HTTP Response:</strong> <code>200</code></p>
+
+<h3>Step 3 — Upload BIOS Firmware Image</h3>
+
+<pre><code>curl -k -u username:password \
+-X POST https://{BMC_IP}/redfish/v1/UpdateService/update \
+-H "Content-Type: application/octet-stream" \
+--data-binary "@{Image_path}" \
+-w "\nHTTP_CODE=%{response_code}\n"
+</code></pre>
+
+<p><strong>Expected HTTP Response:</strong> <code>202</code></p>
+
+<h3>Step 4 — Wait for Completion</h3>
+
+<p>
+A new firmware update task will appear in the BMC task menu.
+Please wait approximately <strong>10 minutes</strong> before checking the BIOS version again.
+</p>
+
+<hr>
+
+<h2>2. BMC Firmware Upgrade</h2>
+
+<h3>Step 1 — Check Current BMC Version</h3>
+
+<pre><code>curl -u username:password -k -s \
+https://{BMC_IP}/redfish/v1/UpdateService/FirmwareInventory/bmc_active
+</code></pre>
+
+<h3>Step 2 — Configure Upgrade Target</h3>
+
+<pre><code>curl -k -u username:password \
+-X PATCH https://{BMC_IP}/redfish/v1/UpdateService \
+-H "Content-Type: application/json" \
+-d '{
+    "HttpPushUriOptions": {
+        "HttpPushUriApplyTime": {
+            "ApplyTime": "Immediate"
+        }
+    },
+    "HttpPushUriTargets": [
+        "bmc_active"
+    ],
+    "HttpPushUriTargetsBusy": true,
+    "Oem": {
+        "ApplyOptions": {
+            "ClearConfig": false
+        }
+    }
+}' \
+-w "\nHTTP_CODE=%{response_code}\n"
+</code></pre>
+
+<h3>Step 3 — Upload BMC Firmware Image</h3>
+
+<pre><code>curl -k -u username:password \
+-X POST https://{BMC_IP}/redfish/v1/UpdateService/update \
+-H "Content-Type: application/octet-stream" \
+--data-binary "@{Image_path}" \
+-w "\nHTTP_CODE=%{response_code}\n"
+</code></pre>
+
+<h3>Step 4 — Wait for Completion</h3>
+
+<p>
+Please wait approximately <strong>20 minutes</strong> for the BMC upgrade process to complete.
+</p>
+
+<hr>
+
+<h2>3. CPLD Firmware Upgrade</h2>
+
+<h3>Step 1 — Check Current CPLD Version</h3>
+
+<pre><code>curl -u username:password -k -s \
+https://{BMC_IP}/redfish/v1/UpdateService/FirmwareInventory/cpld_active
+</code></pre>
+
+<h3>Step 2 — Configure Upgrade Target</h3>
+
+<pre><code>curl -k -u username:password \
+-X PATCH https://{BMC_IP}/redfish/v1/UpdateService \
+-H "Content-Type: application/json" \
+-d '{
+    "HttpPushUriOptions": {
+        "HttpPushUriApplyTime": {
+            "ApplyTime": "Immediate"
+        }
+    },
+    "HttpPushUriTargets": [
+        "cpld_active"
+    ],
+    "HttpPushUriTargetsBusy": true,
+    "Oem": {
+        "ApplyOptions": {
+            "ClearConfig": false
+        }
+    }
+}' \
+-w "\nHTTP_CODE=%{response_code}\n"
+</code></pre>
+
+<h3>Step 3 — Upload CPLD Firmware Image</h3>
+
+<pre><code>curl -k -u username:password \
+-X POST https://{BMC_IP}/redfish/v1/UpdateService/update \
+-H "Content-Type: application/octet-stream" \
+--data-binary "@{Image_path}" \
+-w "\nHTTP_CODE=%{response_code}\n"
+</code></pre>
+
+<h3>Step 4 — Wait for Completion</h3>
+
+<p>
+The CPLD upgrade process usually completes within approximately <strong>30 seconds</strong>.
+</p>
+
+<hr>
+
+<h2>4. ROT Firmware Upgrade</h2>
+
+<h3>Step 1 — Check Current ROT Version</h3>
+
+<pre><code>curl -u username:password -k -s \
+https://{BMC_IP}/redfish/v1/UpdateService/FirmwareInventory/rot_fw_active
+</code></pre>
+
+<h3>Step 2 — Configure Upgrade Target</h3>
+
+<pre><code>curl -k -u username:password \
+-X PATCH https://{BMC_IP}/redfish/v1/UpdateService \
+-H "Content-Type: application/json" \
+-d '{
+    "HttpPushUriOptions": {
+        "HttpPushUriApplyTime": {
+            "ApplyTime": "Immediate"
+        }
+    },
+    "HttpPushUriTargets": [
+        "rot_fw_active"
+    ],
+    "HttpPushUriTargetsBusy": true,
+    "Oem": {
+        "ApplyOptions": {
+            "ClearConfig": false
+        }
+    }
+}' \
+-w "\nHTTP_CODE=%{response_code}\n"
+</code></pre>
+
+<h3>Step 3 — Upload ROT Firmware Image</h3>
+
+<pre><code>curl -k -u username:password \
+-X POST https://{BMC_IP}/redfish/v1/UpdateService/update \
+-H "Content-Type: application/octet-stream" \
+--data-binary "@{Image_path}" \
+-w "\nHTTP_CODE=%{response_code}\n"
+</code></pre>
+
+<h3>Step 4 — Wait for Completion</h3>
+
+<p>
+Please wait approximately <strong>30 seconds</strong> before verifying the ROT firmware version.
+</p>
+
+<hr>
+
+<h2>Firmware Component Mapping</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Component</th>
+            <th>Target ID</th>
+            <th>Firmware Image Example</th>
+            <th>Estimated Upgrade Time</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>BIOS</td>
+            <td><code>bios_active</code></td>
+            <td><code>B066xxxxxx_signed_cap_prd.bin</code></td>
+            <td>~10 Minutes</td>
+        </tr>
+
+        <tr>
+            <td>BMC</td>
+            <td><code>bmc_active</code></td>
+            <td><code>B066Axxx.Ixx_signed_cap_prd.bin</code></td>
+            <td>~20 Minutes</td>
+        </tr>
+
+        <tr>
+            <td>CPLD</td>
+            <td><code>cpld_active</code></td>
+            <td><code>E7142_HPM_SCM_Rxx_Vxxx_prd_sign.bin</code></td>
+            <td>~30 Seconds</td>
+        </tr>
+
+        <tr>
+            <td>ROT</td>
+            <td><code>rot_fw_active</code></td>
+            <td><code>B8066ROTAxx.xx_signed_cap_prd.bin</code></td>
+            <td>~30 Seconds</td>
+        </tr>
+    </tbody>
+</table>
+
+<hr>
+
+<h2>References</h2>
+
+<ul>
+    <li>
+        <a href="/">Home</a>
+    </li>
+
+    <li>
+        <a href="{{ site.baseurl }}/">Back to Blog</a>
+    </li>
+</ul>
+
+</article>
+```
