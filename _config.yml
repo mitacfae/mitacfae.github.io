@@ -2,7 +2,7 @@ title:              Andy's Note
 email:              mitacfae995@gmail.com
 description:        To avoid missing out, write it down so you won't forget it.
 author:             Andy
-baseurl:            "/"
+baseurl:            ""
 url:                "https://mitacfae.github.io"
 
 # Social Profiles
@@ -24,12 +24,3 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap ## Uncomment this line to silently generate a sitemaps.org compliant sitemap for your Jekyll site
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QKTN538X44"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-QKTN538X44');
-</script>
