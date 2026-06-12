@@ -62,7 +62,7 @@
             <em>(Expected Response HTTP Code: <code>202</code>)</em>
         </li>
         <li><strong>Step 4: Wait and Verify</strong><br>
-            A new task will appear in the BMC Task menu<sup>[29]</sup>. <strong>Please wait approximately 10 minutes</strong> for the BIOS upgrade process to complete<sup>[29]</sup>. Once finished, check the firmware version again to verify success.
+            A new task will appear in the BMC Task menu. <strong>Please wait approximately 10 minutes</strong> for the BIOS upgrade process to complete. Once finished, check the firmware version again to verify success.
         </li>
     </ul>
 
@@ -75,9 +75,9 @@
             <pre><code>curl -u username:password -k -s https://{BMC_IP}/redfish/v1/UpdateService/FirmwareInventory/bmc_active</code></pre>
         </li>
         <li><strong>Step 2: Define Update Target</strong><br>
-            Use the <code>PATCH</code> command to define the update target as <code>bmc_active</code><sup>[35, 36]</sup>:
+            Use the <code>PATCH</code> command to define the update target as <code>bmc_active</code>:
             <pre><code>curl -k -u username:password -X PATCH https://{BMC_IP}/redfish/v1/UpdateService -H "Content-Type: application/json" -d '{"HttpPushUriOptions": {"HttpPushUriApplyTime": {"ApplyTime": "Immediate"}},"HttpPushUriTargets": ["bmc_active"],"HttpPushUriTargetsBusy": true,"Oem": {"ApplyOptions": {"ClearConfig": false}}}' -w "\nHTTP_CODE=%{response_code}\n"</code></pre>
-            <em>(Expected Response HTTP Code: <code>200</code>)</em><sup>[37]</sup>
+            <em>(Expected Response HTTP Code: <code>200</code>)</em>
         </li>
         <li><strong>Step 3: Execute Firmware Upgrade</strong><br>
             Use the <code>POST</code> command to upload the corresponding upgrade image fil:
@@ -85,7 +85,7 @@
             <em>(Expected Response HTTP Code: <code>202</code>)</em>
         </li>
         <li><strong>Step 4: Wait and Verify</strong><br>
-            A new task will appear in the BMC Task menu<sup>[41]</sup>. <strong>Please wait approximately 20 minutes</strong> for the BMC upgrade process to complete<sup>[41]</sup>. Check the target firmware version afterward to confirm<sup>[42]</sup>.
+            A new task will appear in the BMC Task menu. <strong>Please wait approximately 20 minutes</strong> for the BMC upgrade process to complete. Check the target firmware version afterward to confirm.
         </li>
     </ul>
 
@@ -108,7 +108,7 @@
             <em>(Expected Response HTTP Code: <code>202</code>)</em>
         </li>
         <li><strong>Step 4: Wait and Verify</strong><br>
-            The CPLD update process is relatively fast; <strong>please wait about 30 seconds</strong> for it to complete before verifying the target version<sup>[53, 54]</sup>.
+            The CPLD update process is relatively fast; <strong>please wait about 30 seconds</strong> for it to complete before verifying the target version.
         </li>
     </ul>
 
@@ -131,7 +131,7 @@
             <em>(Expected Response HTTP Code: <code>202</code>)</em>
         </li>
         <li><strong>Step 4: Wait and Verify</strong><br>
-            The ROT update process <strong>requires waiting approximately 30 seconds</strong><sup>[65]</sup>. Verify the target item firmware version after the process finishes.
+            The ROT update process <strong>requires waiting approximately 30 seconds</strong>. Verify the target item firmware version after the process finishes.
         </li>
     </ul>
 
@@ -140,7 +140,7 @@
     <h2>Component Reference Table</h2>
 
     <h3>Firmware Components and Corresponding Image File Mapping</h3>
-    <p>This remote upgrade process strictly requires Out-of-Band (OOB) firmware upgrade image files matching the naming standards below<sup>[13]</sup>:</p>
+    <p>This remote upgrade process strictly requires Out-of-Band (OOB) firmware upgrade image files matching the naming standards below:</p>
 
     <table>
         <thead>
@@ -155,26 +155,26 @@
             <tr>
                 <td><strong>BIOS</strong></td>
                 <td><code>bios_active</code></td>
-                <td><code>B066xxxxxx_signed_cap_prd.bin</code><sup>[14]</sup></td>
+                <td><code>B066xxxxxx_signed_cap_prd.bin</code></td>
                 <td>~ 10 Minutes<sup>[29]</sup></td>
             </tr>
             <tr>
                 <td><strong>BMC</strong></td>
-                <td><code>bmc_active</code><sup>[36]</sup></td>
+                <td><code>bmc_active</code></td>
                 <td><code>B066Axxx.Ixx_signed_cap_prd.bin</code></td>
-                <td>~ 20 Minutes<sup>[41]</sup></td>
+                <td>~ 20 Minutes</td>
             </tr>
             <tr>
                 <td><strong>CPLD</strong></td>
-                <td><code>cpld_active</code><sup>[48]</sup></td>
+                <td><code>cpld_active</code></td>
                 <td><code>E7142_HPM_SCM_Rxx_Vxxx_prd_sign.bin</code></td>
-                <td>~ 30 Seconds<sup>[53]</sup></td>
+                <td>~ 30 Seconds</td>
             </tr>
             <tr>
                 <td><strong>ROT</strong></td>
-                <td><code>rot_fw_active</code><sup>[60]</sup></td>
+                <td><code>rot_fw_active</code></td>
                 <td><code>B8066ROTAxx.xx_signed_cap_prd.bi</code></td>
-                <td>~ 30 Seconds<sup>[65]</sup></td>
+                <td>~ 30 Seconds</td>
             </tr>
         </tbody>
     </table>
