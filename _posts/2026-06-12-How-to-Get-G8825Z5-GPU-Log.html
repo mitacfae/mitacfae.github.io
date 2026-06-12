@@ -1,0 +1,60 @@
+---
+layout: post
+title: "How to Get G8825Z5 GPU Log"
+subtitle: "Collect GPU diagnostic logs on G8825Z5 platform"
+date: 2026-06-12
+background: '/img/posts/01.jpg'
+---
+
+<h2 class="section-heading">Question</h2>
+
+<p>
+How to get G8825Z5 GPU log?
+</p>
+
+<h2 class="section-heading">Requirement</h2>
+
+<ul>
+  <li><strong>Hardware:</strong> G8825Z5 Server</li>
+  <li><strong>CPU:</strong> AMD EPYC 9575F x2</li>
+  <li><strong>RAM:</strong> Samsung DDR5 5600 RDIMM (M321R8GA0PB0-CWMXJ)</li>
+  <li><strong>OS:</strong> Ubuntu 22.04 Server</li>
+  <li><strong>Application:</strong> UBB_allLog_collection.sh.x</li>
+</ul>
+
+<h2 class="section-heading">Operation</h2>
+
+<p>
+Follow the steps below to collect GPU logs from the G8825Z5 server.
+</p>
+
+<pre><code class="language-bash">
+# Step 1: Copy log collection tool
+cp UBB_allLog_collection.sh.x ~
+
+# Step 2: Change permission
+chmod +x UBB_allLog_collection.sh.x
+
+# Step 3: Execute script
+sudo ./UBB_allLog_collection.sh.x
+</code></pre>
+
+<h2 class="section-heading">Result</h2>
+
+<p>
+After execution is completed, the following log package will be generated:
+</p>
+
+<pre><code class="language-bash">
+All_logs.tar.gz
+</code></pre>
+
+<p>
+Please send the generated <code>All_logs.tar.gz</code> file to MiTAC for further analysis.
+</p>
+
+<hr>
+
+<p>
+For more technical articles, please visit the MiTAC FAE technical blog.
+</p>
