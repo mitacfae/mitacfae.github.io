@@ -24,3 +24,21 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap ## Uncomment this line to silently generate a sitemaps.org compliant sitemap for your Jekyll site
 
+  
+# 新增或移除 categories 項目即可更新右側 sidebar
+
+sidebar_categories:
+  - name: Server
+    url: /server
+  - name: Redfish
+    url: /server/redfish
+  - name: Firmware
+    url: /server/firmware
+  # 新增分類範例：
+  # - name: Networking
+  #   url: /networking
+  # - name: Storage
+  #   url: /storage
+  # - name: Linux
+  #   url: /linux
+
