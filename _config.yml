@@ -27,18 +27,15 @@ plugins:
   
 # 新增或移除 categories 項目即可更新右側 sidebar
 
-sidebar_categories:
-  - name: Server
-    url: /server
-  - name: Redfish
-    url: /server/redfish
-  - name: Firmware
-    url: /server/firmware
-  # 新增分類範例：
-  # - name: Networking
-  #   url: /networking
-  # - name: Storage
-  #   url: /storage
-  # - name: Linux
-  #   url: /linux
-
+# 尋找類似以下的區塊並加入 Categories
+navigation:
+  - title: Home
+    url: /
+  - title: About
+    url: /about
+  - title: Posts
+    url: /posts
+  - title: Categories
+    url: /categories/
+  - title: Contact
+    url: /contact
