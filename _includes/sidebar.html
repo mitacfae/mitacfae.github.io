@@ -1,18 +1,25 @@
-<aside class="sidebar" aria-label="Categories">
-  <div class="sidebar-card">
-    <div class="sidebar-title">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-      Categories
-    </div>
-    <ul class="cat-list">
-      {% for category in site.sidebar_categories %}
-      <li>
-        <a class="cat-item" href="{{ category.url }}">
-          <span class="cat-label">{{ category.name }}</span>
-          {% assign count = site.posts | where_exp: "post", "post.categories contains category.name" | size %}
-          <span class="cat-count">{{ count }}</span>
-        </a>
-      </li>
+<!-- _includes/sidebar.html -->
+<aside class="sidebar">
+  <div class="sidebar-section">
+    <h3>Labels / Categories</h3>
+    <ul class="tag-list">
+      {% assign all_tags = site.posts | map: "tags" | join: "," | split: "," | uniq | sort %}
+      {% for tag in all_tags %}
+        {% assign tag_stripped = tag | strip %}
+        {% if tag_stripped != "" %}
+          {% assign tag_count = 0 %}
+          {% for post in site.posts %}
+            {% if post.tags contains tag_stripped %}
+              {% assign tag_count = tag_count | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+          <li>
+            <a href="/tag/{{ tag_stripped | slugify }}/">
+              {{ tag_stripped }}
+              <span class="tag-count">({{ tag_count }})</span>
+            </a>
+          </li>
+        {% endif %}
       {% endfor %}
     </ul>
   </div>
