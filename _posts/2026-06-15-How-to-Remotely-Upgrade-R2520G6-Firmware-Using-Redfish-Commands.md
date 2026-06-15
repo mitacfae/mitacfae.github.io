@@ -2,7 +2,10 @@
 layout: post
 title: "How to Remotely Upgrade R2520G6 Firmware Using Redfish Commands"
 date: 2026-06-15
-category: Redfish, R2520G6, Intel, Firmware
+category:
+    - Redfish
+    - Firmware
+tags: [R2520G6, Intel]
 ---
 
 
