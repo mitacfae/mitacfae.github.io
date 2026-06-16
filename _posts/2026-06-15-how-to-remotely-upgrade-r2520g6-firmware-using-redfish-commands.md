@@ -20,14 +20,15 @@ related: true
 toc: true
 toc_label: "Table of Contents"
 ---
+This article provides a solution for remotely upgrading the firmware of the R2520G6 server using Redfish commands, addressing challenges associated with manual or onsite firmware updates.
 
-## Question
+## Overview
 
-How to remotely upgrade the firmware of the R2520G6 server using Redfish commands?
-
-## Answer
-
-Use Redfish `PATCH` and `POST` commands from a Linux host to define update targets and upload firmware images for each component. Ensure the R2520G6 is powered off and that out-of-band (OOB) upgrade image files are prepared before starting.
+To perform a remote firmware upgrade on the R2520G6, follow these steps using Redfish commands:
+1. **Define Update Targets** — Use PATCH commands with Redfish to specify the components you wish to update.
+2. **Initiate Firmware Update** — Use POST commands with Redfish to begin upgrading the firmware on the previously defined targets.
+3. **Prepare Firmware Files** — Upload the BIOS, BMC, CPLD, and ROT firmware files to the Linux working directory for the update process.
+4. **Power Off the Server** — Ensure that the R2520G6 is powered off before executing Redfish commands to upgrade the firmware.
 
 > **Note:** This process requires out-of-band (OOB) upgrade image files.
 
