@@ -1,259 +1,92 @@
 ---
 layout: single
-title: "How to Remotely Upgrade R2520G6 Firmware Using Redfish Commands"
+title: "How to Disable B8016 CPU iGPU Function"
 date: 2026-06-15 00:00:00 +0800
 categories:
-  - Redfish
-  - Firmware
-tags:
-  - R2520G6
-  - Redfish
-  - Firmware
-  - BMC
   - BIOS
-  - CPLD
-  - ROT
+  - Hardware
+tags:
+  - B8016
+  - iGPU
+  - AMD
+  - BIOS
+  - Windows Server
 author_profile: true
 read_time: true
 share: true
 related: true
 toc: true
 toc_label: "Table of Contents"
-
 ---
 
-This article provides a solution for remotely upgrading the firmware of the R2520G6 server using Redfish commands, addressing challenges associated with manual or onsite firmware updates.
+This article provides a solution for disabling the CPU integrated GPU (iGPU) on the B8016 platform via BIOS settings, addressing scenarios where the AMD Radeon Graphics device needs to be removed from the operating system's device manager.
 
 ## Overview
 
-To perform a remote firmware upgrade on the R2520G6, follow these steps using Redfish commands:
+To disable the iGPU on the B8016, follow these steps:
 
-1. **Define Update Targets** — Use PATCH commands with Redfish to specify the components you wish to update.
-2. **Initiate Firmware Update** — Use POST commands with Redfish to begin upgrading the firmware on the previously defined targets.
-3. **Prepare Firmware Files** — Upload the BIOS, BMC, CPLD, and ROT firmware files to the Linux working directory for the update process.
-4. **Power Off the Server** — Ensure that the R2520G6 is powered off before executing Redfish commands to upgrade the firmware.
+1. **Update BIOS** — Ensure the B8016 is running BIOS **v9.00 (0x30)** or later before making changes.
+2. **Navigate to GFX Configuration** — Access the iGPU-related settings under the AMD CBS menu in BIOS.
+3. **Apply the Required Settings** — Disable dGPU Only Mode, iGPU Configuration, and GPU Host Translation Cache.
+4. **Save and Reboot** — Save the BIOS changes and reboot the system to apply them.
 
-> **Note:** This process requires out-of-band (OOB) upgrade image files.
-
-### Required Firmware Files
-
-| Component | Filename Pattern |
-|-----------|-----------------|
-| BIOS | `B066xxxxxx_signed_cap_prd.bin` |
-| BMC | `B066Axxx.Ixx_signed_cap_prd.bin` |
-| CPLD | `E7142_HPM_SCM_Rxx_Vxxx_prd_sign.bin` |
-| ROT | `B8066ROTAxx.xx_signed_cap_prd.bin` |
+> **Note:** After applying these settings, **"AMD Radeon Graphics" will disappear** from the Windows Server 2025 Device Manager.
 
 ---
 
-## BIOS Upgrade Process
+## Prerequisites
 
-### 1. Check Current BIOS Firmware Version
-
-```bash
-curl -u username:password -k -s \
-  https://{BMC_IP}/redfish/v1/UpdateService/FirmwareInventory/bios_active
-```
-
-### 2. Define Update Target (PATCH)
-
-```bash
-curl -k -u username:password -X PATCH \
-  https://{BMC_IP}/redfish/v1/UpdateService \
-  -H "Content-Type: application/json" \
-  -d '{
-    "HttpPushUriOptions": {
-      "HttpPushUriApplyTime": {
-        "ApplyTime": "Immediate"
-      }
-    },
-    "HttpPushUriTargets": ["bios_active"],
-    "HttpPushUriTargetsBusy": true,
-    "Oem": {
-      "ApplyOptions": {
-        "ClearConfig": true
-      }
-    }
-  }' \
-  -w "\nHTTP_CODE=%{response_code}\n"
-```
-
-**Expected Response:** `HTTP_CODE=200`
-
-### 3. Upload and Apply Firmware (POST)
-
-```bash
-curl -k -u username:password -X POST \
-  https://{BMC_IP}/redfish/v1/UpdateService/update \
-  -H "Content-Type: application/octet-stream" \
-  --data-binary "@{Image_path}" \
-  -w "\nHTTP_CODE=%{response_code}\n"
-```
-
-**Expected Response:** `HTTP_CODE=202`
-
-### 4. Monitor and Verify
-
-- A task will appear in the BMC Task menu.
-- Wait approximately **10 minutes** for the BIOS upgrade process to complete.
-- Re-run the version check command from Step 1 to confirm the upgrade.
+| Item | Requirement |
+|---|---|
+| BIOS Version | v9.00 (0x30) or later |
+| Operating System | Windows Server 2025 |
+| Access Required | Physical or remote KVM access to BIOS |
 
 ---
 
-## BMC Upgrade Process
+## BIOS Configuration
 
-### 1. Check Current BMC Firmware Version
+### 1. Enter BIOS Setup
 
-```bash
-curl -u username:password -k -s \
-  https://{BMC_IP}/redfish/v1/UpdateService/FirmwareInventory/bmc_active
+Power on or reboot the B8016 and press the appropriate key to enter BIOS Setup during POST.
+
+### 2. Navigate to GFX Configuration
+
+```
+Advanced → AMD CBS → NBIO Common Options → GFX Configuration
 ```
 
-### 2. Define Update Target (PATCH)
+### 3. Apply the Required Settings
 
-```bash
-curl -k -u username:password -X PATCH \
-  https://{BMC_IP}/redfish/v1/UpdateService \
-  -H "Content-Type: application/json" \
-  -d '{
-    "HttpPushUriOptions": {
-      "HttpPushUriApplyTime": {
-        "ApplyTime": "Immediate"
-      }
-    },
-    "HttpPushUriTargets": ["bmc_active"],
-    "HttpPushUriTargetsBusy": true,
-    "Oem": {
-      "ApplyOptions": {
-        "ClearConfig": false
-      }
-    }
-  }' \
-  -w "\nHTTP_CODE=%{response_code}\n"
-```
+Change the following three settings from their defaults:
 
-**Expected Response:** `HTTP_CODE=200`
+| Setting | From | To |
+|---|---|---|
+| dGPU Only Mode | `[Auto]` | `[Disabled]` |
+| iGPU Configuration | `[Auto]` | `[iGPU Disabled]` |
+| GPU Host Translation Cache | `[Auto]` | `[Disabled]` |
 
-### 3. Upload and Apply Firmware (POST)
+![BIOS GFX Configuration screen showing the required settings](/assets/images/2026-06-15-b8016-igpu/image1.png)
 
-```bash
-curl -k -u username:password -X POST \
-  https://{BMC_IP}/redfish/v1/UpdateService/update \
-  -H "Content-Type: application/octet-stream" \
-  --data-binary "@{Image_path}" \
-  -w "\nHTTP_CODE=%{response_code}\n"
-```
+### 4. Save and Reboot
 
-**Expected Response:** `HTTP_CODE=202`
-
-### 4. Monitor and Verify
-
-- A task will appear in the BMC Task menu.
-- Wait approximately **20 minutes** for the BMC upgrade process to complete.
-- Re-run the version check command from Step 1 to confirm the upgrade.
+Press **F10** (or the Save & Exit option) to save the changes and reboot the system.
 
 ---
 
-## CPLD Upgrade Process
+## Verification
 
-### 1. Check Current CPLD Firmware Version
+After the system reboots, open **Device Manager** in Windows Server 2025 and verify the result under **Display Adapters**.
 
-```bash
-curl -u username:password -k -s \
-  https://{BMC_IP}/redfish/v1/UpdateService/FirmwareInventory/cpld_active
-```
+### Before
 
-### 2. Define Update Target (PATCH)
+AMD Radeon(TM) Graphics is listed under Display Adapters in Device Manager.
 
-```bash
-curl -k -u username:password -X PATCH \
-  https://{BMC_IP}/redfish/v1/UpdateService \
-  -H "Content-Type: application/json" \
-  -d '{
-    "HttpPushUriOptions": {
-      "HttpPushUriApplyTime": {
-        "ApplyTime": "Immediate"
-      }
-    },
-    "HttpPushUriTargets": ["cpld_active"],
-    "HttpPushUriTargetsBusy": true,
-    "Oem": {
-      "ApplyOptions": {
-        "ClearConfig": false
-      }
-    }
-  }' \
-  -w "\nHTTP_CODE=%{response_code}\n"
-```
+![Device Manager before: AMD Radeon(TM) Graphics visible under Display Adapters](/assets/images/2026-06-15-b8016-igpu/image2.png)
 
-**Expected Response:** `HTTP_CODE=200`
+### After
 
-### 3. Upload and Apply Firmware (POST)
+AMD Radeon(TM) Graphics no longer appears in Device Manager. Only **Microsoft Basic Display Adapter** remains.
 
-```bash
-curl -k -u username:password -X POST \
-  https://{BMC_IP}/redfish/v1/UpdateService/update \
-  -H "Content-Type: application/octet-stream" \
-  --data-binary "@{Image_path}" \
-  -w "\nHTTP_CODE=%{response_code}\n"
-```
+![Device Manager after: AMD Radeon(TM) Graphics removed from Display Adapters](/assets/images/2026-06-15-b8016-igpu/image3.png)
 
-**Expected Response:** `HTTP_CODE=202`
-
-### 4. Monitor and Verify
-
-- Wait approximately **30 seconds** for the CPLD upgrade process to complete.
-- Re-run the version check command from Step 1 to confirm the upgrade.
-
----
-
-## ROT Upgrade Process
-
-### 1. Check Current ROT Firmware Version
-
-```bash
-curl -u username:password -k -s \
-  https://{BMC_IP}/redfish/v1/UpdateService/FirmwareInventory/rot_fw_active
-```
-
-### 2. Define Update Target (PATCH)
-
-```bash
-curl -k -u username:password -X PATCH \
-  https://{BMC_IP}/redfish/v1/UpdateService \
-  -H "Content-Type: application/json" \
-  -d '{
-    "HttpPushUriOptions": {
-      "HttpPushUriApplyTime": {
-        "ApplyTime": "Immediate"
-      }
-    },
-    "HttpPushUriTargets": ["rot_fw_active"],
-    "HttpPushUriTargetsBusy": true,
-    "Oem": {
-      "ApplyOptions": {
-        "ClearConfig": false
-      }
-    }
-  }' \
-  -w "\nHTTP_CODE=%{response_code}\n"
-```
-
-**Expected Response:** `HTTP_CODE=200`
-
-### 3. Upload and Apply Firmware (POST)
-
-```bash
-curl -k -u username:password -X POST \
-  https://{BMC_IP}/redfish/v1/UpdateService/update \
-  -H "Content-Type: application/octet-stream" \
-  --data-binary "@{Image_path}" \
-  -w "\nHTTP_CODE=%{response_code}\n"
-```
-
-**Expected Response:** `HTTP_CODE=202`
-
-### 4. Monitor and Verify
-
-- Wait approximately **30 seconds** for the ROT upgrade process to complete.
-- Re-run the version check command from Step 1 to confirm the upgrade.
