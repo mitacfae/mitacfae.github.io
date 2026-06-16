@@ -116,3 +116,6 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
+# add Comment in Web Page
+comments:
+  provider: "custom"
