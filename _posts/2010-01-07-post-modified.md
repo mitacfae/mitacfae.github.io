@@ -7,8 +7,8 @@ tags:
   - Post Formats
   - readability
   - standard
-published:
-  - false
+published: false
+
 ---
 
 This post has been updated and should show a modified date if used in a layout.
