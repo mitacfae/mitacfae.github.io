@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "How to Adjust S8016AGM2NR System FAN Speed"
-date: 2026-06-16 00:00:00 +0800
+date: 2025-12-16 00:00:00 +0800
 categories:
   - IPMI
   - Hardware
