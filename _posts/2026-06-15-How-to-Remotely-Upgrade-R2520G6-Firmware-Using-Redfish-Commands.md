@@ -1,15 +1,26 @@
 ---
-layout: post
+layout: single
 title: "How to Remotely Upgrade R2520G6 Firmware Using Redfish Commands"
-date: 2026-06-15
-category:
-    - Redfish
-    - Firmware
-tags: [R2520G6, Intel]
+date: 2026-06-15 00:00:00 +0800
+categories:
+  - Redfish
+  - Firmware
+tags:
+  - R2520G6
+  - Redfish
+  - Firmware
+  - BMC
+  - BIOS
+  - CPLD
+  - ROT
+author_profile: true
+read_time: true
+share: true
+related: true
+toc: true
+toc_label: "Table of Contents"
+
 ---
-
-
-# How to Remotely Upgrade R2520G6 Firmware Using Redfish Commands
 
 This article provides a solution for remotely upgrading the firmware of the R2520G6 server using Redfish commands, addressing challenges associated with manual or onsite firmware updates.
 
