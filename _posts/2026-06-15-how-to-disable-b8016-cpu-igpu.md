@@ -1,9 +1,21 @@
 ---
-layout: post
+layout: single
 title: "How to Disable B8016 CPU iGPU Function"
 date: 2026-06-15 00:00:00 +0800
-categories: [BIOS, Hardware]
-tags: [B8016, iGPU, AMD, BIOS, Windows Server]
+categories:
+  - BIOS
+  - Hardware
+tags:
+  - B8016
+  - iGPU
+  - AMD
+  - Windows Server
+author_profile: true
+read_time: true
+share: true
+related: true
+toc: true
+toc_label: "Table of Contents"
 ---
 
 ## Question
