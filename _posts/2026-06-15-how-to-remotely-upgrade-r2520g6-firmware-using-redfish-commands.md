@@ -19,6 +19,7 @@ share: true
 related: true
 toc: true
 toc_label: "Table of Contents"
+toc_sticky: true # fix right-side bar "Table of Contents"
 ---
 This article provides a solution for remotely upgrading the firmware of the R2520G6 server using Redfish commands, addressing challenges associated with manual or onsite firmware updates.
 
