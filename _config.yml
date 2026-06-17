@@ -103,7 +103,7 @@ defaults:
       share: true
       related: true
       toc: true          #Table of Contents: enable
-      toc_sitcky: true   #Whole Web enable TOC 
+      toc_sticky: true   #Whole Web enable TOC 
   # _pages
   - scope:
       path: "_pages"
