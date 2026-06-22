@@ -11,7 +11,6 @@ tags:
   - Firmware
   - BMC
   - BIOS
-  - CPLD
   - ROT
 author_profile: true
 read_time: true
@@ -43,7 +42,6 @@ Place the following firmware files in your Linux working directory before procee
 |---|---|
 | BIOS | `B066xxxxxx_signed_cap_prd.bin` |
 | BMC | `B066Axxx.Ixx_signed_cap_prd.bin` |
-| CPLD | `E7142_HPM_SCM_Rxx_Vxxx_prd_sign.bin` |
 | ROT | `B8066ROTAxx.xx_signed_cap_prd.bin` |
 
 ---
@@ -140,51 +138,6 @@ A task will appear in the BMC Task menu. Wait approximately **20 minutes** for t
 
 ---
 
-## CPLD Upgrade
-
-### Step 1 — Check Current Version
-
-```bash
-curl -u username:password -k -s \
-  https://{BMC_IP}/redfish/v1/UpdateService/FirmwareInventory/cpld_active
-```
-
-### Step 2 — Define Update Target (PATCH)
-
-```bash
-curl -k -u username:password -X PATCH \
-  https://{BMC_IP}/redfish/v1/UpdateService \
-  -H "Content-Type: application/json" \
-  -d '{
-    "HttpPushUriOptions": {
-      "HttpPushUriApplyTime": { "ApplyTime": "Immediate" }
-    },
-    "HttpPushUriTargets": ["cpld_active"],
-    "HttpPushUriTargetsBusy": true,
-    "Oem": { "ApplyOptions": { "ClearConfig": false } }
-  }' \
-  -w "\nHTTP_CODE=%{response_code}\n"
-```
-
-**Expected Response:** `HTTP_CODE=200`
-
-### Step 3 — Upload and Apply Firmware (POST)
-
-```bash
-curl -k -u username:password -X POST \
-  https://{BMC_IP}/redfish/v1/UpdateService/update \
-  -H "Content-Type: application/octet-stream" \
-  --data-binary "@{Image_path}" \
-  -w "\nHTTP_CODE=%{response_code}\n"
-```
-
-**Expected Response:** `HTTP_CODE=202`
-
-### Result
-
-Wait approximately **30 seconds** for the CPLD upgrade to complete, then re-run Step 1 to confirm the new version.
-
----
 
 ## ROT Upgrade
 
