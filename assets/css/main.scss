@@ -24,3 +24,24 @@
     }
   }
 }
+
+/* 讓 masthead 固定在頂端，捲動時不消失 */
+.masthead {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 20;
+}
+
+/* masthead 變成 fixed 後會脫離版面流，內容會被蓋住，
+   所以幫整個頁面內容往下推開，數值大約等於 masthead 高度 */
+body {
+  padding-top: 70px; /* 依實際 masthead 高度微調，通常 70~100px */
+}
+
+/* 如果你有開 sticky sidebar（個人簡介那塊），
+   它原本是用 top: 2em 定位，masthead 變固定後可能需要再往下調一點 */
+.sidebar.sticky {
+  top: calc(2em + 80px);
+}
