@@ -23,29 +23,26 @@
           {%- endfor -%}
         </ul>
 
-        <!-- 語系切換下拉選單 -->
-        <div class="lang-switcher">
-          <select id="lang-select" onchange="if (this.value) window.location.href=this.value;">
-            <option value="" disabled {% if page.lang == 'zh-TW' or page.lang == nil %}selected{% endif %}>EN / 🌐 中文</option>
+<!-- 語系切換下拉選單 -->
+<div class="lang-switcher">
+  <select id="lang-select" onchange="if (this.value) window.location.href=this.value;">
+    <option value="" disabled {% unless page.lang == 'zh-TW' %}selected{% endunless %}>🌐 EN / 中文</option>
 
-            {% if page.lang_ref %}
-              {% assign zh_post = site.posts | where: "lang_ref", page.lang_ref | where: "lang", "zh-TW" | first %}
-  #           {% assign en_post = site.posts | where: "lang_ref", page.lang_ref | where: "lang", "en" | first %}
+    {% if page.lang_ref %}
+      {% assign zh_post = site.posts | where: "lang_ref", page.lang_ref | where: "lang", "zh-TW" | first %}
+      {% assign en_post = site.posts | where: "lang_ref", page.lang_ref | where_exp: "p", "p.lang != 'zh-TW'" | first %}
 
-              {% if zh_post %}
-                <option value="{{ zh_post.url | relative_url }}" {% if page.lang == 'zh-TW' %}selected{% endif %}>中文</option>
-              {% endif %}
-   #           {% if en_post %}
-   #             <option value="{{ en_post.url | relative_url }}" {% if page.lang == 'en' %}selected{% endif %}>English</option>
-   #           {% endif %}
-            {% else %}
-               <option value="{{ '/' | relative_url }}">English (Home)</option>
-   #         <option value="{{ '/en/' | relative_url }}">English (Home)</option>
-   #           <option value="{{ '/' | relative_url }}">中文 (首頁)</option>
-
-            {% endif %}
-          </select>
-        </div>
+      {% if en_post %}
+        <option value="{{ en_post.url | relative_url }}" {% unless page.lang == 'zh-TW' %}selected{% endunless %}>English</option>
+      {% endif %}
+      {% if zh_post %}
+        <option value="{{ zh_post.url | relative_url }}" {% if page.lang == 'zh-TW' %}selected{% endif %}>中文</option>
+      {% endif %}
+    {% else %}
+      <option value="{{ page.url | relative_url }}" selected>English</option>
+    {% endif %}
+  </select>
+</div>
 
         {% if site.search == true %}
           <button class="search__toggle" type="button">
