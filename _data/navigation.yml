@@ -7,3 +7,13 @@ main:
     url: /tags/
   - title: "About"
     url: /about/
+
+zh:
+  - title: "文章列表"
+    url: /zh/posts/
+  - title: "文章分類"
+    url: /zh/categories/
+  - title: "文章標籤"
+    url: /zh/tags/
+  - title: "關於"
+    url: /about/
