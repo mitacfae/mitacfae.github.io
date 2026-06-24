@@ -45,3 +45,53 @@ body {
 .sidebar.sticky {
   top: calc(2em + 80px);
 }
+
+/* ─── Taxonomy Index：四欄緊湊格式 ─────────────────────────────── */
+.taxonomy__index {
+  margin-bottom: 1em;
+
+  ul {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.15em 0.5em;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.8em;
+
+    li {
+      margin: 0;
+      padding: 0.1em 0;
+      border-bottom: 1px solid #f2f3f3;
+
+      a {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.1em 0.2em;
+        text-decoration: none;
+
+        strong {
+          font-weight: 600;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
+
+.taxonomy__count {
+  font-size: 0.85em;
+  color: #aaa;
+  margin-left: 0.4em;
+  flex-shrink: 0;
+}
+
+/* 手機版降為兩欄 */
+@media (max-width: 600px) {
+  .taxonomy__index ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
