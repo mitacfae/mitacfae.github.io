@@ -1,9 +1,22 @@
 {% assign locale = include.locale | default: site.locale %}
 {% capture logo_path %}{{ site.logo }}{% endcapture %}
 
-{% comment %}判斷目前語系，決定要用哪組導覽列{% endcomment %}
+{% comment %}根據 URL 前綴決定導覽列與語言{% endcomment %}
 {% assign nav_key = 'main' %}
-{% if page.url contains '/zh' %}{% assign nav_key = 'zh' %}{% endif %}
+{% assign current_lang = 'en' %}
+{% if page.url contains '/zh-hans' %}
+  {% assign nav_key = 'zh-hans' %}
+  {% assign current_lang = 'zh-hans' %}
+{% elsif page.url contains '/zh' %}
+  {% assign nav_key = 'zh' %}
+  {% assign current_lang = 'zh' %}
+{% elsif page.url contains '/ja' %}
+  {% assign nav_key = 'ja' %}
+  {% assign current_lang = 'ja' %}
+{% elsif page.url contains '/ko' %}
+  {% assign nav_key = 'ko' %}
+  {% assign current_lang = 'ko' %}
+{% endif %}
 
 <div class="masthead">
   <div class="masthead__inner-wrap">
@@ -33,35 +46,67 @@
 
 <div class="lang-switcher">
   {% if include.lang_ref %}
-    {% assign zh_post = site.posts | where: "lang_ref", include.lang_ref | where: "lang", "zh-TW" | first %}
-    {% assign en_post = site.posts | where: "lang_ref", include.lang_ref | where_exp: "p", "p.lang != 'zh-TW'" | first %}
+    {% comment %}文章頁：尋找各語言對應文章{% endcomment %}
+    {% assign zh_post    = site.posts | where: "lang_ref", include.lang_ref | where: "lang", "zh-TW"   | first %}
+    {% assign zh_hans_post = site.posts | where: "lang_ref", include.lang_ref | where: "lang", "zh-Hans" | first %}
+    {% assign ja_post    = site.posts | where: "lang_ref", include.lang_ref | where: "lang", "ja"      | first %}
+    {% assign ko_post    = site.posts | where: "lang_ref", include.lang_ref | where: "lang", "ko"      | first %}
+    {% assign en_post    = site.posts | where: "lang_ref", include.lang_ref | where_exp: "p", "p.lang != 'zh-TW' and p.lang != 'zh-Hans' and p.lang != 'ja' and p.lang != 'ko'" | first %}
     <select id="lang-select" onchange="window.location.href=this.options[this.selectedIndex].value;">
       {% if en_post %}
-        <option value="{{ site_root }}{{ en_post.url }}">English</option>
+        <option value="{{ site_root }}{{ en_post.url }}">🇺🇸 English</option>
       {% endif %}
       {% if zh_post %}
-        <option value="{{ site_root }}{{ zh_post.url }}">中文</option>
+        <option value="{{ site_root }}{{ zh_post.url }}">🇹🇼 繁體中文</option>
+      {% endif %}
+      {% if zh_hans_post %}
+        <option value="{{ site_root }}{{ zh_hans_post.url }}">🇨🇳 简体中文</option>
+      {% endif %}
+      {% if ja_post %}
+        <option value="{{ site_root }}{{ ja_post.url }}">🇯🇵 日本語</option>
+      {% endif %}
+      {% if ko_post %}
+        <option value="{{ site_root }}{{ ko_post.url }}">🇰🇷 한국어</option>
       {% endif %}
     </select>
   {% else %}
+    {% comment %}非文章頁：切換到各語言首頁{% endcomment %}
     <select id="lang-select" onchange="window.location.href=this.options[this.selectedIndex].value;">
-      <option value="{{ site_root }}/">English</option>
-      <option value="{{ site_root }}/zh/">中文</option>
+      <option value="{{ site_root }}/">🇺🇸 English</option>
+      <option value="{{ site_root }}/zh/">🇹🇼 繁體中文</option>
+      <option value="{{ site_root }}/zh-hans/">🇨🇳 简体中文</option>
+      <option value="{{ site_root }}/ja/">🇯🇵 日本語</option>
+      <option value="{{ site_root }}/ko/">🇰🇷 한국어</option>
     </select>
   {% endif %}
 </div>
+
 <script>
 (function() {
-  var isZh = window.location.pathname.indexOf('/zh') === 0;
+  var path = window.location.pathname;
   var sel = document.getElementById('lang-select');
   if (!sel) return;
-  var opts = sel.options;
-  for (var i = 0; i < opts.length; i++) {
-    if (isZh && opts[i].value.indexOf('/zh/') !== -1) {
-      sel.selectedIndex = i; break;
+
+  var langMap = [
+    { prefix: '/zh-hans', flag: '🇨🇳' },
+    { prefix: '/zh',      flag: '🇹🇼' },
+    { prefix: '/ja',      flag: '🇯🇵' },
+    { prefix: '/ko',      flag: '🇰🇷' },
+  ];
+
+  var matchedFlag = '🇺🇸';
+  for (var i = 0; i < langMap.length; i++) {
+    if (path.indexOf(langMap[i].prefix) === 0) {
+      matchedFlag = langMap[i].flag;
+      break;
     }
-    if (!isZh && opts[i].value.indexOf('/zh/') === -1) {
-      sel.selectedIndex = i; break;
+  }
+
+  var opts = sel.options;
+  for (var j = 0; j < opts.length; j++) {
+    if (opts[j].text.indexOf(matchedFlag) === 0) {
+      sel.selectedIndex = j;
+      break;
     }
   }
 })();
