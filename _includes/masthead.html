@@ -1,5 +1,10 @@
 {% assign locale = include.locale | default: site.locale %}
 {% capture logo_path %}{{ site.logo }}{% endcapture %}
+
+{% comment %}判斷目前語系，決定要用哪組導覽列{% endcomment %}
+{% assign nav_key = 'main' %}
+{% if page.url contains '/zh' %}{% assign nav_key = 'zh' %}{% endif %}
+
 <div class="masthead">
   <div class="masthead__inner-wrap">
     <div class="masthead__menu">
@@ -13,7 +18,7 @@
         </a>
 
         <ul class="visible-links">
-          {%- for link in site.data.navigation.main -%}
+          {%- for link in site.data.navigation[nav_key] -%}
             <li class="masthead__menu-item">
               <a href="{{ link.url | relative_url }}"
                 {% if link.description %} title="{{ link.description }}"{% endif %}
