@@ -17,11 +17,34 @@ author_profile: true
 {% endfor %}
 {% assign all_tags = all_tags | sort %}
 
+<div class="taxonomy__index">
+  <ul>
+    {% for tag in all_tags %}
+      {% assign tag_count = 0 %}
+      {% for post in zh_posts %}
+        {% if post.tags contains tag %}
+          {% assign tag_count = tag_count | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+      <li>
+        <a href="#{{ tag | slugify }}">
+          <strong>{{ tag }}</strong> <span class="taxonomy__count">{{ tag_count }}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
 {% for tag in all_tags %}
-  <h2 id="{{ tag | slugify }}" class="archive__subtitle">{{ tag }}</h2>
-  {% for post in zh_posts %}
-    {% if post.tags contains tag %}
-      {% include archive-single.html %}
-    {% endif %}
-  {% endfor %}
+  <section id="{{ tag | slugify }}" class="taxonomy__section">
+    <h2 class="archive__subtitle">{{ tag }}</h2>
+    <div class="entries-list">
+      {% for post in zh_posts %}
+        {% if post.tags contains tag %}
+          {% include archive-single.html type='list' %}
+        {% endif %}
+      {% endfor %}
+    </div>
+    <a href="#page-title" class="back-to-top">回到頂部 &uarr;</a>
+  </section>
 {% endfor %}

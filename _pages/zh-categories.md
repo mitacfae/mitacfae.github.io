@@ -17,11 +17,34 @@ author_profile: true
 {% endfor %}
 {% assign all_cats = all_cats | sort %}
 
+<div class="taxonomy__index">
+  <ul>
+    {% for cat in all_cats %}
+      {% assign cat_count = 0 %}
+      {% for post in zh_posts %}
+        {% if post.categories contains cat %}
+          {% assign cat_count = cat_count | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+      <li>
+        <a href="#{{ cat | slugify }}">
+          <strong>{{ cat }}</strong> <span class="taxonomy__count">{{ cat_count }}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
 {% for cat in all_cats %}
-  <h2 id="{{ cat | slugify }}" class="archive__subtitle">{{ cat }}</h2>
-  {% for post in zh_posts %}
-    {% if post.categories contains cat %}
-      {% include archive-single.html %}
-    {% endif %}
-  {% endfor %}
+  <section id="{{ cat | slugify }}" class="taxonomy__section">
+    <h2 class="archive__subtitle">{{ cat }}</h2>
+    <div class="entries-list">
+      {% for post in zh_posts %}
+        {% if post.categories contains cat %}
+          {% include archive-single.html type='list' %}
+        {% endif %}
+      {% endfor %}
+    </div>
+    <a href="#page-title" class="back-to-top">回到頂部 &uarr;</a>
+  </section>
 {% endfor %}
