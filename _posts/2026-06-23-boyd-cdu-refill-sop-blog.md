@@ -5,6 +5,8 @@ date: 2026-06-23 08:00:00 +0800
 categories:
   - SOP
   - LiquidCooling
+lang: zh-TW
+lang_ref: boyd-cdu-refill-sop    # 中英文共用的關聯 key
 tags:
   - BOYD
   - CDU
