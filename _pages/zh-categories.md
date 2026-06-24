@@ -1,17 +1,14 @@
 ---
-title: "Posts by Category"
-permalink: /categories/
+title: "文章分類"
+permalink: /zh/categories/
 layout: archive
 author_profile: true
 ---
 
-{% assign en_posts = site.posts | where_exp: "p", "p.lang != 'zh-TW'" %}
+{% assign zh_posts = site.posts | where: "lang", "zh-TW" %}
 
-{% assign postsByCategory = en_posts | group_by: "categories" %}
-
-{% comment %}展開每篇文章的所有 categories{% endcomment %}
 {% assign all_cats = "" | split: "" %}
-{% for post in en_posts %}
+{% for post in zh_posts %}
   {% for cat in post.categories %}
     {% unless all_cats contains cat %}
       {% assign all_cats = all_cats | push: cat %}
@@ -22,7 +19,7 @@ author_profile: true
 
 {% for cat in all_cats %}
   <h2 id="{{ cat | slugify }}" class="archive__subtitle">{{ cat }}</h2>
-  {% for post in en_posts %}
+  {% for post in zh_posts %}
     {% if post.categories contains cat %}
       {% include archive-single.html %}
     {% endif %}

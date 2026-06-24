@@ -1,13 +1,13 @@
 ---
-title: "Posts by Year"
-permalink: /posts/
+title: "文章列表"
+permalink: /zh/posts/
 layout: archive
 author_profile: true
 ---
 
-{% assign en_posts = site.posts | where_exp: "p", "p.lang != 'zh-TW'" %}
+{% assign zh_posts = site.posts | where: "lang", "zh-TW" %}
 
-{% assign postsByYear = en_posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+{% assign postsByYear = zh_posts | group_by_exp: "post", "post.date | date: '%Y'" %}
 {% for year in postsByYear %}
   <h2 id="{{ year.name }}" class="archive__subtitle">{{ year.name }}</h2>
   {% for post in year.items %}
