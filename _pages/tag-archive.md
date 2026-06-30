@@ -18,8 +18,8 @@ author_profile: true
 {% assign all_tags = all_tags | sort %}
 
 
-{% comment %}計數表格：微調字體大小與左側個人簡介一致{% endcomment %}
-<div style="display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 16px 30px !important; margin: 30px 0 !important; width: 100% !important; box-sizing: border-box !important;">
+{% comment %}計數表格：完全同步測試網頁的字型、字重、底線與對齊方式{% endcomment %}
+<div style="display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 16px 40px !important; margin: 30px 0 !important; width: 100% !important; box-sizing: border-box !important;">
   {% for tag in all_tags %}
     {% assign tag_count = 0 %}
     {% for post in en_posts %}
@@ -27,17 +27,25 @@ author_profile: true
         {% assign tag_count = tag_count | plus: 1 %}
       {% endif %}
     {% endfor %}
-    <div style="display: flex !important; align-items: baseline !important; gap: 8px !important; width: 100% !important; min-width: 0 !important; word-break: break-word !important; line-height: 1.4 !important;">
-      <a href="#{{ tag | slugify }}" style="text-decoration: none !important; color: inherit !important; display: inline-flex !important; align-items: baseline !important; gap: 6px !important; min-width: 0 !important; width: 100% !important; font-size: 0.75em !important;">
-        <span style="flex-shrink: 1 !important; font-weight: 600 !important; color: #49515d !important;">{{ tag }}</span> 
-        <span class="taxonomy__count" style="color: #8994a6 !important; font-size: 0.85em !important; flex-shrink: 0 !important;">{{ tag_count }}</span>
+    <div style="display: block !important; width: 100% !important; min-width: 0 !important;">
+      <a href="#{{ tag | slugify }}" class="taxonomy__item-link" style="text-decoration: none !important; display: flex !important; justify-content: space-between !important; align-items: baseline !important; width: 100% !important; border-bottom: 1px solid #f2f3f3 !important; padding-bottom: 6px !important; font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI', 'Helvetica Neue', 'Lucida Grande', Arial, sans-serif !important; font-size: 0.75em !important; transition: all 0.2s ease-in-out;">
+        <span style="font-weight: 700 !important; color: #3d4144 !important; word-break: break-word !important; padding-right: 8px !important;">{{ tag }}</span> 
+        <span class="taxonomy__count" style="color: #8994a6 !important; font-size: 0.85em !important; font-weight: normal !important; flex-shrink: 0 !important;">{{ tag_count }}</span>
       </a>
     </div>
   {% endfor %}
 </div>
 <div style="clear: both; margin-bottom: 30px;"></div>
 
-
+<style>
+  /* 模擬測試網頁滑鼠移過去時的底線加深與變色效果 */
+  .taxonomy__item-link:hover {
+    border-bottom-color: #3d4144 !important;
+  }
+  .taxonomy__item-link:hover span {
+    color: #000000 !important;
+  }
+</style>
 
 
 {% comment %}各 tag 的文章列表（含 excerpt）{% endcomment %}
