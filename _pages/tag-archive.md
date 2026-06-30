@@ -19,7 +19,7 @@ author_profile: true
 
 {% comment %}計數表格{% endcomment %}
 <div class="taxonomy__index">
-  <ul>
+  <ul style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 20px; list-style: none; padding-left: 0;">
     {% for tag in all_tags %}
       {% assign tag_count = 0 %}
       {% for post in en_posts %}
@@ -27,7 +27,7 @@ author_profile: true
           {% assign tag_count = tag_count | plus: 1 %}
         {% endif %}
       {% endfor %}
-      <li>
+      <li style="margin: 0;">
         <a href="#{{ tag | slugify }}">
           <strong>{{ tag }}</strong> <span class="taxonomy__count">{{ tag_count }}</span>
         </a>
