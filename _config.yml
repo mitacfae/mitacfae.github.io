@@ -92,7 +92,7 @@ widgets:
         # ... 原本的 profile 設定 (內含 twitter, github 等)
       - type: html
         title: 訪客統計
-        content: '<div style="text-align:center;"><a href="https://www.websiteout.net"><img src="https://www.websiteout.net/map.php?c=XXXXXX" border="0"></a></div>'
+        content: '<script type="text/javascript" src="https://counter.websiteout.com/js/10/6/629/0"></script>'
  
 
 footer:
