@@ -51,7 +51,16 @@
     {% assign zh_hans_post = site.posts | where: "lang_ref", include.lang_ref | where: "lang", "zh-Hans" | first %}
     {% assign ja_post    = site.posts | where: "lang_ref", include.lang_ref | where: "lang", "ja"      | first %}
     {% assign ko_post    = site.posts | where: "lang_ref", include.lang_ref | where: "lang", "ko"      | first %}
-    {% assign en_post    = site.posts | where: "lang_ref", include.lang_ref | where_exp: "p", "p.lang != 'zh-TW' and p.lang != 'zh-Hans' and p.lang != 'ja' and p.lang != 'ko'" | first %}
+    
+    {% comment %}修正：將不支援的 and 邏輯改為多層串聯過濾{% endcomment %}
+    {% assign en_posts_filtered = site.posts | where: "lang_ref", include.lang_ref %}
+    {% assign en_posts_filtered = en_posts_filtered | where_exp: "p", "p.lang != 'zh-TW'" %}
+    {% assign en_posts_filtered = en_posts_filtered | where_exp: "p", "p.lang != 'zh-Hans'" %}
+    {% assign en_posts_filtered = en_posts_filtered | where_exp: "p", "p.lang != 'ja'" %}
+    {% assign en_posts_filtered = en_posts_filtered | where_exp: "p", "p.lang != 'ko'" %}
+    {% assign en_post    = en_posts_filtered | first %}
+
+ 
     <select id="lang-select" onchange="window.location.href=this.options[this.selectedIndex].value;">
       {% if en_post %}
         <option value="{{ site_root }}{{ en_post.url }}">🇺🇸 English</option>
