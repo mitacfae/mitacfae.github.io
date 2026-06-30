@@ -17,9 +17,10 @@ author_profile: true
 {% endfor %}
 {% assign all_tags = all_tags | sort %}
 
+
 {% comment %}計數表格{% endcomment %}
 <div class="taxonomy__index">
-  <ul style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 30px; list-style: none; padding-left: 0; line-height: 1.5;">
+  <ul style="display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 20px 40px !important; list-style: none !important; padding: 0 !important; margin: 0 !important; width: 100% !important;">
     {% for tag in all_tags %}
       {% assign tag_count = 0 %}
       {% for post in en_posts %}
@@ -27,14 +28,16 @@ author_profile: true
           {% assign tag_count = tag_count | plus: 1 %}
         {% endif %}
       {% endfor %}
-      <li style="margin: 0; padding: 4px 0;">
-        <a href="#{{ tag | slugify }}" style="text-decoration: none;">
-          <strong>{{ tag }}</strong> <span class="taxonomy__count" style="margin-left: 4px;">{{ tag_count }}</span>
+      <li style="display: block !important; float: none !important; width: auto !important; margin: 0 !important; padding: 0 !important; min-width: 0 !important; word-break: break-word !important; line-height: 1.4 !important;">
+        <a href="#{{ tag | slugify }}" style="text-decoration: none !important; display: flex !important; align-items: baseline !important; gap: 6px !important; width: 100% !important;">
+          <strong style="flex-shrink: 1 !important;">{{ tag }}</strong> 
+          <span class="taxonomy__count" style="color: #8994a6 !important; font-size: 0.8em !important; flex-shrink: 0 !important;">{{ tag_count }}</span>
         </a>
       </li>
     {% endfor %}
   </ul>
 </div>
+<div style="clear: both;"></div>
 
 
 {% comment %}各 tag 的文章列表（含 excerpt）{% endcomment %}
