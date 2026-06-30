@@ -19,7 +19,7 @@ author_profile: true
 
 {% comment %}計數表格{% endcomment %}
 <div class="taxonomy__index">
-  <ul style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 20px; list-style: none; padding-left: 0;">
+  <ul style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 30px; list-style: none; padding-left: 0; line-height: 1.5;">
     {% for tag in all_tags %}
       {% assign tag_count = 0 %}
       {% for post in en_posts %}
@@ -27,14 +27,15 @@ author_profile: true
           {% assign tag_count = tag_count | plus: 1 %}
         {% endif %}
       {% endfor %}
-      <li style="margin: 0;">
-        <a href="#{{ tag | slugify }}">
-          <strong>{{ tag }}</strong> <span class="taxonomy__count">{{ tag_count }}</span>
+      <li style="margin: 0; padding: 4px 0;">
+        <a href="#{{ tag | slugify }}" style="text-decoration: none;">
+          <strong>{{ tag }}</strong> <span class="taxonomy__count" style="margin-left: 4px;">{{ tag_count }}</span>
         </a>
       </li>
     {% endfor %}
   </ul>
 </div>
+
 
 {% comment %}各 tag 的文章列表（含 excerpt）{% endcomment %}
 {% for tag in all_tags %}
