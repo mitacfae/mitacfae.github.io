@@ -18,8 +18,8 @@ author_profile: true
 {% assign all_tags = all_tags | sort %}
 
 
-{% comment %}計數表格：改用純 div 網格，徹底避開主題 ul 樣式干擾{% endcomment %}
-<div style="display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 24px 40px !important; margin: 30px 0 !important; width: 100% !important; box-sizing: border-box !important;">
+{% comment %}計數表格：微調字體大小與左側個人簡介一致{% endcomment %}
+<div style="display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 16px 30px !important; margin: 30px 0 !important; width: 100% !important; box-sizing: border-box !important;">
   {% for tag in all_tags %}
     {% assign tag_count = 0 %}
     {% for post in en_posts %}
@@ -27,15 +27,17 @@ author_profile: true
         {% assign tag_count = tag_count | plus: 1 %}
       {% endif %}
     {% endfor %}
-    <div style="display: flex !important; align-items: baseline !important; gap: 8px !important; width: 100% !important; min-width: 0 !important; word-break: break-word !important; line-height: 1.5 !important;">
-      <a href="#{{ tag | slugify }}" style="text-decoration: none !important; color: inherit !important; display: inline-flex !important; align-items: baseline !important; gap: 6px !important; min-width: 0 !important; width: 100% !important;">
-        <strong style="flex-shrink: 1 !important; font-weight: bold !important;">{{ tag }}</strong> 
+    <div style="display: flex !important; align-items: baseline !important; gap: 8px !important; width: 100% !important; min-width: 0 !important; word-break: break-word !important; line-height: 1.4 !important;">
+      <a href="#{{ tag | slugify }}" style="text-decoration: none !important; color: inherit !important; display: inline-flex !important; align-items: baseline !important; gap: 6px !important; min-width: 0 !important; width: 100% !important; font-size: 0.75em !important;">
+        <span style="flex-shrink: 1 !important; font-weight: 600 !important; color: #49515d !important;">{{ tag }}</span> 
         <span class="taxonomy__count" style="color: #8994a6 !important; font-size: 0.85em !important; flex-shrink: 0 !important;">{{ tag_count }}</span>
       </a>
     </div>
   {% endfor %}
 </div>
-<div style="clear: both; margin-bottom: 40px;"></div>
+<div style="clear: both; margin-bottom: 30px;"></div>
+
+
 
 
 {% comment %}各 tag 的文章列表（含 excerpt）{% endcomment %}
