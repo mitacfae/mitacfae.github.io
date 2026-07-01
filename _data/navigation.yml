@@ -17,3 +17,21 @@ zh:
     url: /zh/tags/
   - title: "關於"
     url: /about/
+
+zh-hans:
+  - title: "文章列表"
+    url: /zh-hans/posts/
+  - title: "关于"
+    url: /about/
+
+ja:
+  - title: "投稿一覧"
+    url: /ja/posts/
+  - title: "概要"
+    url: /about/
+
+ko:
+  - title: "게시글 목록"
+    url: /ko/posts/
+  - title: "소개"
+    url: /about/
