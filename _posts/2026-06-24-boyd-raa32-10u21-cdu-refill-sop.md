@@ -1,6 +1,7 @@
 ---
 title: "BOYD RAA32-10U21 CDU Refill SOP"
 excerpt: "Standard operating procedure for refilling coolant, venting air, and verifying dual-pump redundancy on the BOYD RAA32-10U21 CDU."
+date: 2026-06-24
 categories:
   - sop
   - liquidcooling
