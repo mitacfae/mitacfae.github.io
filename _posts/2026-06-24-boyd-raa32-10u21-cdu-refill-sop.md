@@ -9,6 +9,7 @@ tags:
   - BOYD
   - Liquid Cooling
   - SOP
+lang: en
 lang_ref: boyd-cdu-refill-sop
 header:
   teaser: /assets/images/sop/liquidcooling/boyd-raa32-10u21-cdu-refill-sop/exhaust-port.jpeg
