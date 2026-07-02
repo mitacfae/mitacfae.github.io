@@ -1,6 +1,7 @@
 ---
 title: "BOYD RAA32-10U21 CDU 补液 SOP"
 excerpt: "BOYD RAA32-10U21 CDU 补液、排气与双泵备份验证的标准作业程序。"
+date: 2026-06-24
 lang: zh-Hans
 lang_ref: boyd-cdu-refill-sop
 categories:
