@@ -35,7 +35,24 @@ analytics:
 markdown: kramdown
 remote_theme: mmistakes/minimal-mistakes
 # Outputting
-permalink: /:categories/:title/
+collections:
+  posts-en:
+    output: true
+    permalink: /:categories/:title/
+  posts-zh-tw:
+    output: true
+    permalink: /:categories/:title/
+  posts-zh-hans:
+    output: true
+    permalink: /:categories/:title/
+  posts-ja:
+    output: true
+    permalink: /:categories/:title/
+  posts-ko:
+    output: true
+    permalink: /:categories/:title/
+
+
 paginate: 5 # amount of posts to show
 paginate_path: /page:num/
 timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
@@ -108,7 +125,7 @@ footer:
  #     url: "https://instagram.com/"
 
 defaults:
-  # _posts
+  # _posts （尚未搬移的舊文章，搬完可以整組刪除）
   - scope:
       path: ""
       type: posts
@@ -120,7 +137,71 @@ defaults:
       share: true
       related: true
       toc: true          #Table of Contents: enable
-      toc_sticky: true   #Whole Web enable TOC 
+      toc_sticky: true   #Whole Web enable TOC
+
+ # 新的語系 collections
+  - scope:
+      path: ""
+      type: posts-en
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+      toc: true
+      toc_sticky: true
+  - scope:
+      path: ""
+      type: posts-zh-tw
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+      toc: true
+      toc_sticky: true
+  - scope:
+      path: ""
+      type: posts-zh-hans
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+      toc: true
+      toc_sticky: true
+  - scope:
+      path: ""
+      type: posts-ja
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+      toc: true
+      toc_sticky: true
+  - scope:
+      path: ""
+      type: posts-ko
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+      toc: true
+      toc_sticky: true
+
+  
   # _pages
   - scope:
       path: "_pages"
