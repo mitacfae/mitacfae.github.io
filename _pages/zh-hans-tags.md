@@ -5,7 +5,7 @@ layout: archive
 author_profile: true
 ---
 
-{% assign zh_hans_posts = site.posts | where: "lang", "zh-Hans" %}
+{% assign zh_hans_posts = site.collections['posts-zh-hans'].docs | sort: 'date' | reverse %}
 
 {% assign all_tags = "" | split: "" %}
 {% for post in zh_hans_posts %}
