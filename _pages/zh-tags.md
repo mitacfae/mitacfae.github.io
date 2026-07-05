@@ -7,15 +7,19 @@ author_profile: true
 
 {% assign zh_posts = site.posts | where: "lang", "zh-TW" %}
 
-{% assign all_tags = "" | split: "" %}
+{% assign tags_str = "" %}
 {% for post in zh_posts %}
   {% for tag in post.tags %}
-    {% unless all_tags contains tag %}
-      {% assign all_tags = all_tags | push: tag %}
-    {% endunless %}
+    {% if tags_str == "" %}
+      {% assign tags_str = tag %}
+    {% else %}
+      {% unless tags_str contains tag %}
+        {% assign tags_str = tags_str | append: "|||" | append: tag %}
+      {% endunless %}
+    {% endif %}
   {% endfor %}
 {% endfor %}
-{% assign all_tags = all_tags | sort %}
+{% assign all_tags = tags_str | split: "|||" | sort %}
 
 <div class="taxonomy__index">
   <ul>
