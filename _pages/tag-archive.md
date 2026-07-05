@@ -6,6 +6,10 @@ author_profile: true
 ---
 
 {% assign en_posts = site.posts | where_exp: "p", "p.lang != 'zh-TW'" %}
+{% assign en_posts = en_posts | where_exp: "p", "p.lang != 'zh-Hans'" %}
+{% assign en_posts = en_posts | where_exp: "p", "p.lang != 'ja'" %}
+{% assign en_posts = en_posts | where_exp: "p", "p.lang != 'ko'" %}
+
 
 {% assign all_tags = "" | split: "" %}
 {% for post in en_posts %}
