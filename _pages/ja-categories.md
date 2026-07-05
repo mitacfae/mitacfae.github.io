@@ -7,18 +7,19 @@ author_profile: true
 
 {% assign ja_posts = site.posts | where: "lang", "ja" %}
 
-{% assign all_cats = "" | split: "" %}
+{% assign cats_str = "" %}
 {% for post in ja_posts %}
   {% for cat in post.categories %}
-    {% unless all_cats contains cat %}
-      {% assign all_cats = all_cats | push: cat %}
-    {% endunless %}
+    {% if cats_str == "" %}
+      {% assign cats_str = cat %}
+    {% else %}
+      {% unless cats_str contains cat %}
+        {% assign cats_str = cats_str | append: "|||" | append: cat %}
+      {% endunless %}
+    {% endif %}
   {% endfor %}
 {% endfor %}
-
-{% if all_cats.size > 0 %}
-  {% assign all_cats = all_cats | sort %}
-{% endif %}
+{% assign all_cats = cats_str | split: "|||" | sort %}
 
 <div class="taxonomy__index">
   <ul>
@@ -48,6 +49,6 @@ author_profile: true
         {% endif %}
       {% endfor %}
     </div>
-    <a href="#page-title" class="back-to-top">トップへ戻る &uarr;</a>
+    <a href="#page-title" class="back-to-top">トップに戻る &uarr;</a>
   </section>
 {% endfor %}
