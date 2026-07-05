@@ -15,7 +15,10 @@ author_profile: true
     {% endunless %}
   {% endfor %}
 {% endfor %}
-{% assign all_tags = all_tags | sort %}
+
+{% if all_tags.size > 0 %}
+  {% assign all_tags = all_tags | sort %}
+{% endif %}
 
 <div class="taxonomy__index">
   <ul>

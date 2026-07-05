@@ -15,7 +15,10 @@ author_profile: true
     {% endunless %}
   {% endfor %}
 {% endfor %}
-{% assign all_cats = all_cats | sort %}
+
+{% if all_cats.size > 0 %}
+  {% assign all_cats = all_cats | sort %}
+{% endif %}
 
 <div class="taxonomy__index">
   <ul>
