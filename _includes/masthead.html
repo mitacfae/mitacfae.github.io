@@ -47,12 +47,15 @@
 <div class="lang-switcher">
   {% if include.lang_ref %}
   {% comment %}文章頁：從各語系 collection 裡找對應文章{% endcomment %}
-  {% assign en_post      = site.collections['posts-en'].docs      | where: "lang_ref", include.lang_ref | first %}
-  {% assign zh_post      = site.collections['posts-zh-tw'].docs   | where: "lang_ref", include.lang_ref | first %}
-  {% assign zh_hans_post = site.collections['posts-zh-hans'].docs | where: "lang_ref", include.lang_ref | first %}
-  {% assign ja_post      = site.collections['posts-ja'].docs      | where: "lang_ref", include.lang_ref | first %}
-  {% assign ko_post      = site.collections['posts-ko'].docs      | where: "lang_ref", include.lang_ref | first %}
 
+{% assign zh_post      = site.posts | where: "lang_ref", include.lang_ref | where: "lang", "zh-TW"   | first %}
+   {% assign zh_hans_post = site.posts | where: "lang_ref", include.lang_ref | where: "lang", "zh-Hans" | first %}
+   {% assign ja_post      = site.posts | where: "lang_ref", include.lang_ref | where: "lang", "ja"      | first %}
+   {% assign ko_post      = site.posts | where: "lang_ref", include.lang_ref | where: "lang", "ko"      | first %}
+
+
+
+  
   <select id="lang-select" onchange="window.location.href=this.options[this.selectedIndex].value;">
 
     
