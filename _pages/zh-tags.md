@@ -10,16 +10,18 @@ author_profile: true
 {% assign tags_str = "" %}
 {% for post in zh_posts %}
   {% for tag in post.tags %}
+    {% assign needle = "|||" | append: tag | append: "|||" %}
+    {% assign haystack = "|||" | append: tags_str | append: "|||" %}
     {% if tags_str == "" %}
       {% assign tags_str = tag %}
+    {% elsif haystack contains needle %}
+      {# 標籤已存在，略過 #}
     {% else %}
-      {% unless tags_str contains tag %}
-        {% assign tags_str = tags_str | append: "|||" | append: tag %}
-      {% endunless %}
+      {% assign tags_str = tags_str | append: "|||" | append: tag %}
     {% endif %}
   {% endfor %}
 {% endfor %}
-{% assign all_tags = tags_str | split: "|||" | sort %}
+{% assign all_tags = tags_str | split: "|||" | sort_natural %}
 
 <div class="taxonomy__index">
   <ul>
