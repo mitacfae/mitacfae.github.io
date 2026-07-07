@@ -1,6 +1,7 @@
 ---
 layout: single
 title: "How to Disable B8016 CPU iGPU Function"
+lang_ref: how-to-disable-b8016-cpu-igpu
 date: 2026-06-15 00:00:00 +0800
 categories:
   - BIOS
