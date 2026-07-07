@@ -121,6 +121,28 @@ defaults:
       related: true
       toc: true          #Table of Contents: enable
       toc_sticky: true   #Whole Web enable TOC
+  # 語系子資料夾：自動套用語系前綴的 permalink，避免與英文版網址撞車
+  # 注意：資料夾名稱請與實際的 _posts 子資料夾名稱完全一致
+  - scope:
+      path: "_posts/zh-tw"
+      type: posts
+    values:
+      permalink: /zh/:categories/:title/
+  - scope:
+      path: "_posts/zh-hans"
+      type: posts
+    values:
+      permalink: /zh-hans/:categories/:title/
+  - scope:
+      path: "_posts/ja"
+      type: posts
+    values:
+      permalink: /ja/:categories/:title/
+  - scope:
+      path: "_posts/ko"
+      type: posts
+    values:
+      permalink: /ko/:categories/:title/
   # _pages
   - scope:
       path: "_pages"
