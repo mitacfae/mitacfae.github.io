@@ -12,6 +12,7 @@ tags:
   - Password
   - Security
 author_profile: true
+lang: en
 read_time: true
 share: true
 related: true
