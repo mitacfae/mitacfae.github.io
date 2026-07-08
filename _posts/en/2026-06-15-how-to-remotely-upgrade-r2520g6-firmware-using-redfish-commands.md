@@ -2,6 +2,7 @@
 layout: single
 title: "How to Remotely Upgrade R2520G6 Firmware Using Redfish Commands"
 date: 2026-06-15 00:00:00 +0800
+lang: en
 lang_ref: how-to-remotely-upgrade-r2520g6-firmware-using-redfish-commands
 categories:
   - Redfish
