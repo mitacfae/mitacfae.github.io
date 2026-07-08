@@ -2,6 +2,8 @@
 layout: single
 title: "How to Reset BMC Password"
 date: 2026-06-18 00:00:00 +0800
+lang: en
+lang_ref: how-to-reset-bmc-password
 categories:
   - IPMI
   - BMC
