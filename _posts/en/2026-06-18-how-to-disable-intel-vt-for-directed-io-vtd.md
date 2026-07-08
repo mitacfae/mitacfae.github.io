@@ -2,6 +2,8 @@
 layout: single
 title: "How to Disable Intel VT for Directed I/O (VT-d)"
 date: 2026-06-18 00:00:00 +0800
+lang: en
+lang_ref: how-to-disable-intel-vt-for-directed-io-vtd
 categories:
   - BIOS
   - Hardware
