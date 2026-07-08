@@ -2,6 +2,8 @@
 title: "BOYD RAA32-10U21 CDU 냉각수 보충 SOP"
 excerpt: "BOYD RAA32-10U21 CDU의 냉각수 보충, 공기 배출, 이중 펌프 이중화 검증을 위한 표준 작업 절차입니다."
 date: 2026-06-24
+lang: ko
+lang_ref: boyd-cdu-refill-sop
 categories:
   - sop
   - liquidcooling
@@ -10,8 +12,7 @@ tags:
   - BOYD
   - Liquid Cooling
   - SOP
-lang: ko
-lang_ref: boyd-cdu-refill-sop
+
 header:
   teaser: /assets/images/sop/liquidcooling/boyd-raa32-10u21-cdu-refill-sop/exhaust-port.jpeg
 ---
