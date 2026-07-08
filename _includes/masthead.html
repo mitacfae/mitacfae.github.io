@@ -44,50 +44,35 @@
 <!-- 語系切換下拉選單 -->
 {% assign site_root = site.url | append: site.baseurl %}
 
+{% comment %}
+統一邏輯：不論目前是英文原文還是翻譯文章，都用同一套迴圈去查每個語言版本是否存在。
+不再有「英文走寫死清單、翻譯走真查找」的兩套分支，避免兩邊結果對不上。
+this_ref 優先取 include.lang_ref（呼叫此 include 時傳入的參數），
+沒有的話 fallback 用 page.lang_ref（文章 frontmatter 自己的欄位）。
+{% endcomment %}
+{% assign this_ref = include.lang_ref | default: page.lang_ref %}
+
+{% assign lang_codes = "en|zh-TW|zh-Hans|ja|ko" | split: "|" %}
+{% assign lang_flags = "🇺🇸|🇹🇼|🇨🇳|🇯🇵|🇰🇷" | split: "|" %}
+{% assign lang_names = "English|繁體中文|简体中文|日本語|한국어" | split: "|" %}
+{% assign home_paths = "/|/zh/|/zh-hans/|/ja/|/ko/" | split: "|" %}
+
 <div class="lang-switcher">
-  {% if include.lang_ref %}
-  {% comment %}文章頁：從各語系 collection 裡找對應文章{% endcomment %}
-
-  {% assign zh_post      = site.posts | where: "lang_ref", include.lang_ref | where: "lang", "zh-TW"   | first %}
-  {% assign zh_hans_post = site.posts | where: "lang_ref", include.lang_ref | where: "lang", "zh-Hans" | first %}
-  {% assign ja_post      = site.posts | where: "lang_ref", include.lang_ref | where: "lang", "ja"      | first %}
-  {% assign ko_post      = site.posts | where: "lang_ref", include.lang_ref | where: "lang", "ko"      | first %}
-
-  {% comment %}修正：將不支援的 and 邏輯改為多層串聯過濾{% endcomment %}
-  {% assign en_posts_filtered = site.posts | where: "lang_ref", include.lang_ref %}
-  {% assign en_posts_filtered = en_posts_filtered | where_exp: "p", "p.lang != 'zh-TW'" %}
-  {% assign en_posts_filtered = en_posts_filtered | where_exp: "p", "p.lang != 'zh-Hans'" %}
-  {% assign en_posts_filtered = en_posts_filtered | where_exp: "p", "p.lang != 'ja'" %}
-  {% assign en_posts_filtered = en_posts_filtered | where_exp: "p", "p.lang != 'ko'" %}
-  {% assign en_post    = en_posts_filtered | first %}
-
   <select id="lang-select" onchange="window.location.href=this.options[this.selectedIndex].value;">
-      {% if en_post %}
-        <option value="{{ site_root }}{{ en_post.url }}">🇺🇸 English</option>
+    {% for lang_code in lang_codes %}
+      {% assign idx = forloop.index0 %}
+      {% assign matched_post = nil %}
+      {% if this_ref %}
+        {% assign matched_post = site.posts | where: "lang_ref", this_ref | where: "lang", lang_code | first %}
       {% endif %}
-      {% if zh_post %}
-        <option value="{{ site_root }}{{ zh_post.url }}">🇹🇼 繁體中文</option>
+      {% if matched_post %}
+        <option value="{{ site_root }}{{ matched_post.url }}">{{ lang_flags[idx] }} {{ lang_names[idx] }}</option>
+      {% elsif this_ref == nil %}
+        {% comment %}非文章頁（沒有 lang_ref 可查）：退回各語言首頁{% endcomment %}
+        <option value="{{ site_root }}{{ home_paths[idx] }}">{{ lang_flags[idx] }} {{ lang_names[idx] }}</option>
       {% endif %}
-      {% if zh_hans_post %}
-        <option value="{{ site_root }}{{ zh_hans_post.url }}">🇨🇳 简体中文</option>
-      {% endif %}
-      {% if ja_post %}
-        <option value="{{ site_root }}{{ ja_post.url }}">🇯🇵 日本語</option>
-      {% endif %}
-      {% if ko_post %}
-        <option value="{{ site_root }}{{ ko_post.url }}">🇰🇷 한국어</option>
-      {% endif %}
-    </select>
-  {% else %}
-    {% comment %}非文章頁：切換到各語言首頁{% endcomment %}
-    <select id="lang-select" onchange="window.location.href=this.options[this.selectedIndex].value;">
-      <option value="{{ site_root }}/">🇺🇸 English</option>
-      <option value="{{ site_root }}/zh/">🇹🇼 繁體中文</option>
-      <option value="{{ site_root }}/zh-hans/">🇨🇳 简体中文</option>
-      <option value="{{ site_root }}/ja/">🇯🇵 日本語</option>
-      <option value="{{ site_root }}/ko/">🇰🇷 한국어</option>
-    </select>
-  {% endif %}
+    {% endfor %}
+  </select>
 </div>
 
 <script>
