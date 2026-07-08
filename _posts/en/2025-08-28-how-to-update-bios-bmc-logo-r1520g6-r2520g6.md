@@ -3,6 +3,8 @@ title: "How to Update BIOS/BMC Logo on R1520G6 and R2520G6"
 excerpt: "Step-by-step guide to customizing the BIOS splash screen and BMC web UI logo on MiTAC R1520G6 and R2520G6 servers using the Firmware Customization Portal."
 date: 2025-08-28
 last_modified_at: 2025-08-28
+lang: en
+lang_ref: how-to-update-bios-bmc-logo-r1520g6-r2520g6
 categories:
   - Firmware
 tags:
