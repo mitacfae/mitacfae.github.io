@@ -5,9 +5,6 @@ paginate: 5
 ---
 
 {% assign filtered_posts = paginator.posts | where_exp: "p", "p.lang != 'zh-TW'" %}
-{% assign filtered_posts = filtered_posts | where_exp: "p", "p.lang != 'zh-Hans'" %}
-{% assign filtered_posts = filtered_posts | where_exp: "p", "p.lang != 'ja'" %}
-{% assign filtered_posts = filtered_posts | where_exp: "p", "p.lang != 'ko'" %}
 {% for post in filtered_posts %}
   {% include archive-single.html %}
 {% endfor %}
