@@ -3,6 +3,7 @@ layout: single
 title: "如何重置 BMC 密码"
 date: 2026-06-18 00:00:00 +0800
 lang: zh-Hans
+lang_ref: how-to-reset-bmc-password
 categories:
   - IPMI
   - BMC
