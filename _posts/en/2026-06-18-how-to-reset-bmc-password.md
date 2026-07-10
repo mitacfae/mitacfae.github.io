@@ -4,6 +4,7 @@ title: "How to Reset BMC Password"
 date: 2026-06-18 00:00:00 +0800
 lang: en
 lang_ref: how-to-reset-bmc-password
+Description: "This article explains how to reset the BMC password using `ipmitool`, covering both remote reset (when you still have network access to the BMC) and local reset (when the BMC password is unknown or missing)."
 categories:
   - IPMI
   - BMC
