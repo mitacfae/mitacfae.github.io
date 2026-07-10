@@ -8,6 +8,7 @@ Description: "This article explains why **Intel VT for Directed I/O (VT-d)** rev
 categories:
   - BIOS
   - Hardware
+  - How to
 tags:
   - Intel
   - VT-d
