@@ -8,6 +8,7 @@ Description: "This article explains how to reset the BMC password using `ipmitoo
 categories:
   - IPMI
   - BMC
+  - How to
 tags:
   - BMC
   - IPMI
