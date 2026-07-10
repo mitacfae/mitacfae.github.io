@@ -4,6 +4,7 @@ title: "How to Adjust S8016AGM2NR System FAN Speed"
 date: 2025-12-16 00:00:00 +0800
 lang: en
 lang_ref: how-to-adjust-s8016agm2nr-system-fan-speed
+Description: "This article explains how to manually adjust the system FAN speed on the S8016AGM2NR using IPMI raw commands, addressing scenarios where the default BMC fan control needs to be overridden for thermal management or noise reduction purposes."
 categories:
   - IPMI
   - Hardware
