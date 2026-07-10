@@ -3,14 +3,14 @@ title: "BOYD RAA32-10U21 CDU 冷却液補充SOP"
 excerpt: "BOYD RAA32-10U21 CDUにおける冷却液の補充、エア抜き、デュアルポンプ冗長性検証のための標準作業手順書。"
 lang: ja
 lang_ref: boyd-cdu-refill-sop
+Description: "本記事では、BOYD RAA32-10U21 CDUにおける冷却液の補充、エア抜き、デュアルポンプ冗長性の検証に関する標準作業手順を説明します。これにより、液冷ループを安定した圧力で確実に稼働させることができます。"
 categories:
-  - sop
-  - liquidcooling
+  - SOP
+  - Liquid Cooling
 tags:
   - CDU
   - BOYD
   - 液冷
-  - SOP
 header:
   teaser: https://blog.mitacfae.com/assets/images/sop/liquidcooling/boyd-raa32-10u21-cdu-refill-sop/exhaust-port.jpeg
 ---
