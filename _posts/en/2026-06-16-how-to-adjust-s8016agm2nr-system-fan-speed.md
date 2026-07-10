@@ -8,6 +8,7 @@ Description: "This article explains how to manually adjust the system FAN speed 
 categories:
   - IPMI
   - Hardware
+  - How to
 tags:
   - S8016AGM2NR
   - FAN
