@@ -21,9 +21,32 @@ author_profile: true
 {% endfor %}
 {% assign all_cats = cats_str | split: "|||" | sort %}
 
+{% comment %}置頂分類：How to, KBase, SOP，不分大小寫比對{% endcomment %}
+{% assign priority_names = "how to,kbase,sop" | split: "," %}
+{% assign priority_cats = "" | split: "" %}
+{% for name in priority_names %}
+  {% for cat in all_cats %}
+    {% assign cat_lc = cat | downcase %}
+    {% if cat_lc == name %}
+      {% assign priority_cats = priority_cats | push: cat %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+
+{% comment %}其餘分類：扣掉已置頂的，維持原本排序{% endcomment %}
+{% assign remaining_cats = "" | split: "" %}
+{% for cat in all_cats %}
+  {% assign cat_lc = cat | downcase %}
+  {% unless priority_names contains cat_lc %}
+    {% assign remaining_cats = remaining_cats | push: cat %}
+  {% endunless %}
+{% endfor %}
+
+{% assign ordered_cats = priority_cats | concat: remaining_cats %}
+
 {% comment %}計數表格：與英文版 /categories/ 一致的三欄 Grid 排版{% endcomment %}
 <div style="display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 16px 40px !important; margin: 30px 0 !important; width: 100% !important; box-sizing: border-box !important;">
-  {% for cat in all_cats %}
+  {% for cat in ordered_cats %}
     {% assign cat_count = 0 %}
     {% for post in ja_posts %}
       {% if post.categories contains cat %}
@@ -49,7 +72,7 @@ author_profile: true
   }
 </style>
 
-{% for cat in all_cats %}
+{% for cat in ordered_cats %}
   <section id="{{ cat | slugify }}" class="taxonomy__section">
     <h2 class="archive__subtitle">{{ cat }}</h2>
     <div class="entries-list">
