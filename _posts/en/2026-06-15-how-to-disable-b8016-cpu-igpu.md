@@ -3,10 +3,12 @@ layout: single
 title: "How to Disable B8016 CPU iGPU Function"
 lang: en
 lang_ref: how-to-disable-b8016-cpu-igpu
+Description: "This article provides a solution for disabling the CPU integrated GPU (iGPU) on the B8016 platform via BIOS settings, addressing scenarios where the AMD Radeon Graphics device needs to be removed from the operating system's device manager."
 date: 2026-06-15 00:00:00 +0800
 categories:
   - BIOS
   - Hardware
+  - How to
 tags:
   - B8016
   - iGPU
