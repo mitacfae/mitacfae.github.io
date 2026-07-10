@@ -4,9 +4,11 @@ title: "How to Remotely Upgrade R2520G6 Firmware Using Redfish Commands"
 date: 2026-06-15 00:00:00 +0800
 lang: en
 lang_ref: how-to-remotely-upgrade-r2520g6-firmware-using-redfish-commands
+Description: "This article provides a solution for remotely upgrading the firmware of the R2520G6 server using Redfish commands, addressing challenges associated with manual or onsite firmware updates."
 categories:
   - Redfish
   - Firmware
+  - How to
 tags:
   - R2520G6
   - Redfish
