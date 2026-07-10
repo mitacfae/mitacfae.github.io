@@ -22,7 +22,7 @@ twitter_username: username
 github_username: mitacfae
 minimal_mistakes_skin: default
 search: true
- 
+
 # Analytics
 analytics:
   provider: "google-gtag"
