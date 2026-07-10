@@ -1,0 +1,35 @@
+{%- assign locale = page.locale | default: layout.locale | default: site.locale -%}
+{{ content }}
+
+{% comment %} 想置頂的分類,依你要顯示的順序列出 {% endcomment %}
+{% assign priority_names = "How to,KBase,SOP" | split: "," %}
+
+{% comment %} 把 site.categories 轉成排序後的 [name, posts] 陣列 {% endcomment %}
+{% assign all_cats = site.categories | sort_natural %}
+
+{% comment %} 依 priority_names 的順序,逐一取出對應分類 {% endcomment %}
+{% assign priority_cats = "" | split: "," %}
+{% for name in priority_names %}
+  {% assign matched = all_cats | where_exp: "cat", "cat[0] == name" %}
+  {% assign priority_cats = priority_cats | concat: matched %}
+{% endfor %}
+
+{% comment %} 其餘分類:從 all_cats 裡逐一排除掉已經置頂的 {% endcomment %}
+{% assign remaining_cats = all_cats %}
+{% for name in priority_names %}
+  {% assign remaining_cats = remaining_cats | where_exp: "cat", "cat[0] != name" %}
+{% endfor %}
+
+<style>
+.taxonomy-priority h2,
+.taxonomy-priority .page__taxonomy-item,
+.taxonomy-priority .taxonomy__count {
+  color: #000000;
+}
+</style>
+
+<div class="taxonomy-priority">
+{% include posts-taxonomy.html locale=locale taxonomies=priority_cats %}
+</div>
+
+{% include posts-taxonomy.html locale=locale taxonomies=remaining_cats %}
