@@ -4,8 +4,8 @@ excerpt: "Standard operating procedure for refilling coolant, venting air, and v
 description: "This article describes the standard operating procedure for refilling coolant, venting trapped air, and verifying dual-pump redundancy on a BOYD RAA32-10U21 CDU, ensuring the liquid cooling loop runs reliably at stable pressure."
 date: 2026-06-24
 categories:
-  - sop
-  - liquidcooling
+  - SOP
+  - Liquid Cooling
 tags:
   - CDU
   - BOYD
