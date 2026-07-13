@@ -1,6 +1,6 @@
 ---
 title: "關於"
-layout: archive
+layout: single
 permalink: /zh/about/
 author_profile: true
 toc: false
