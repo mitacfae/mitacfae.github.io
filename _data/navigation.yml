@@ -16,7 +16,7 @@ zh:
   - title: "文章標籤"
     url: /zh/tags/
   - title: "關於"
-    url: /about/
+    url: /zh/about/
 
 zh-hans:
   - title: "文章列表"
@@ -26,7 +26,7 @@ zh-hans:
   - title: "文章标签"
     url: /zh-hans/tags/
   - title: "关于"
-    url: /about/
+    url: /zh-hans/about/
 
 ja:
   - title: "投稿一覧"
@@ -36,7 +36,7 @@ ja:
   - title: "タグ"
     url: /ja/tags/
   - title: "概要"
-    url: /about/
+    url: /ja/about/
 
 ko:
   - title: "게시글 목록"
@@ -46,4 +46,4 @@ ko:
   - title: "태그"
     url: /ko/tags/
   - title: "소개"
-    url: /about/
+    url: /ko/about/
