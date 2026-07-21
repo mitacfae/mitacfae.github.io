@@ -62,9 +62,8 @@ $ ./8056_clear_poh.sh root tyan@123 10.99.238.73
 ![Example of running the POH clear script against a target BMC](/assets/images/bmc/how-to-reset-b8056-power-on-hours/script-execution-example.png)
 
 
-...
-📎 [Download 8056_clear_poh.sh](/assets/files/bmc/how-to-reset-b8056-power-on-hours/8056_clear_poh.sh)
-...
+[Download 8056_clear_poh.sh](/assets/files/bmc/how-to-reset-b8056-power-on-hours/8056_clear_poh.sh)
+
 
 ### Result
 
