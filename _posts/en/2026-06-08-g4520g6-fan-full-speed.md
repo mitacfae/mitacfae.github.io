@@ -3,7 +3,7 @@ title: "How Can I Set System Fan Running at Full Speed in G4520G6?"
 lang: en
 lang_ref: g4520g6-fan-full-speed
 date: 2026-06-08
-last_modified_at: 2026-06-08
+last_modified_at: 2026-07-24
 tags: [fan, G4520G6, speed]
 categories: [How to]
 ---
